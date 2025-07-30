@@ -16,8 +16,11 @@ const transports: { [sessionId: string]: StreamableHTTPServerTransport } = {};
 
 // Handle POST requests for client-to-server communication
 app.post("/mcp", async (req, res) => {
+  console.error("Request body:", req.body);
+  console.error("isInitializeRequest:", isInitializeRequest(req.body));
   // Check for existing session ID
   const sessionId = req.headers["mcp-session-id"] as string | undefined;
+  console.error("Received request with session ID:", sessionId);
   let transport: StreamableHTTPServerTransport;
 
   if (sessionId && transports[sessionId]) {
@@ -101,6 +104,10 @@ app.post("/mcp", async (req, res) => {
 
     // Connect to the MCP server
     await server.connect(transport);
+    // Após conectar, envie o sessionId no header da resposta
+    if (transport.sessionId) {
+      res.setHeader("mcp-session-id", transport.sessionId);
+    }
   } else {
     // Invalid request
     res.status(400).json({

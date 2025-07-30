@@ -1,7 +1,7 @@
-{
-  "servers": {
-    "mcp-server-express": {
-      "url": "http://localhost:3000/mcp"
-    }
-  }
-}
+// {
+//   "servers": {
+//     "mcp-server-express": {
+//       "url": "http://localhost:3000/mcp"
+//     }
+//   }
+// }
